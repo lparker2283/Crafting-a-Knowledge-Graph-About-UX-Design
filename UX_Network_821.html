@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 700px;
+                 height: 700px;
+                 background-color: #eeeeee;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#d5f5e3", "id": "Industrial design", "label": "Industrial design", "shape": "circle"}, {"color": "#d5f5e3", "id": "Interaction design", "label": "Interaction design", "shape": "circle"}, {"color": "#d5f5e3", "id": "Product manager", "label": "Product manager", "shape": "circle"}, {"color": "#d5f5e3", "id": "Organization", "label": "Organization", "shape": "circle"}, {"color": "#d5f5e3", "id": "Project", "label": "Project", "shape": "circle"}, {"color": "#d5f5e3", "id": "Scope (project management)", "label": "Scope (project management)", "shape": "circle"}, {"color": "#d5f5e3", "id": "Timeline", "label": "Timeline", "shape": "circle"}, {"color": "#d5f5e3", "id": "User experience design", "label": "User experience design", "shape": "circle"}, {"color": "#d5f5e3", "id": "Design", "label": "Design", "shape": "circle"}, {"color": "#d5f5e3", "id": "Great Recession", "label": "Great Recession", "shape": "circle"}, {"color": "#d5f5e3", "id": "2008", "label": "2008", "shape": "circle"}, {"color": "#d5f5e3", "id": "Labour economics", "label": "Labour economics", "shape": "circle"}, {"color": "#d5f5e3", "id": "Economy", "label": "Economy", "shape": "circle"}, {"color": "#d5f5e3", "id": "Recession", "label": "Recession", "shape": "circle"}, {"color": "#d5f5e3", "id": "2009", "label": "2009", "shape": "circle"}, {"color": "#d5f5e3", "id": "Internship", "label": "Internship", "shape": "circle"}, {"color": "#d5f5e3", "id": "Work (human activity)", "label": "Work (human activity)", "shape": "circle"}, {"color": "#d5f5e3", "id": "Culture", "label": "Culture", "shape": "circle"}, {"color": "#d5f5e3", "id": "Company", "label": "Company", "shape": "circle"}, {"color": "#d5f5e3", "id": "Feedback", "label": "Feedback", "shape": "circle"}, {"color": "#d5f5e3", "id": "People", "label": "People", "shape": "circle"}, {"color": "#d5f5e3", "id": "Product design", "label": "Product design", "shape": "circle"}, {"color": "#d5f5e3", "id": "Iteration", "label": "Iteration", "shape": "circle"}, {"color": "#d5f5e3", "id": "Customer experience", "label": "Customer experience", "shape": "circle"}, {"color": "#d5f5e3", "id": "Marketing", "label": "Marketing", "shape": "circle"}, {"color": "#d5f5e3", "id": "User experience", "label": "User experience", "shape": "circle"}, {"color": "#d5f5e3", "id": "Experience", "label": "Experience", "shape": "circle"}, {"color": "#d5f5e3", "id": "Customer", "label": "Customer", "shape": "circle"}, {"color": "#d5f5e3", "id": "Presales", "label": "Presales", "shape": "circle"}, {"color": "#d5f5e3", "id": "Sales", "label": "Sales", "shape": "circle"}, {"color": "#d5f5e3", "id": "Use case", "label": "Use case", "shape": "circle"}, {"color": "#d5f5e3", "id": "Regulation", "label": "Regulation", "shape": "circle"}, {"color": "#d5f5e3", "id": "Privacy", "label": "Privacy", "shape": "circle"}, {"color": "#d5f5e3", "id": "Personalization", "label": "Personalization", "shape": "circle"}, {"color": "#d5f5e3", "id": "Website wireframe", "label": "Website wireframe", "shape": "circle"}, {"color": "#d5f5e3", "id": "User-centered design", "label": "User-centered design", "shape": "circle"}, {"color": "#d5f5e3", "id": "Data", "label": "Data", "shape": "circle"}, {"color": "#d5f5e3", "id": "Analytics", "label": "Analytics", "shape": "circle"}, {"color": "#d5f5e3", "id": "User interface", "label": "User interface", "shape": "circle"}, {"color": "#d5f5e3", "id": "Educational technology", "label": "Educational technology", "shape": "circle"}, {"color": "#d5f5e3", "id": "Education", "label": "Education", "shape": "circle"}, {"color": "#d5f5e3", "id": "Gamification", "label": "Gamification", "shape": "circle"}, {"color": "#d5f5e3", "id": "Website", "label": "Website", "shape": "circle"}, {"color": "#d5f5e3", "id": "Information needs", "label": "Information needs", "shape": "circle"}, {"color": "#d5f5e3", "id": "Usability", "label": "Usability", "shape": "circle"}, {"color": "#d5f5e3", "id": "System", "label": "System", "shape": "circle"}, {"color": "#d5f5e3", "id": "Artificial intelligence", "label": "Artificial intelligence", "shape": "circle"}, {"color": "#d5f5e3", "id": "Weak artificial intelligence", "label": "Weak artificial intelligence", "shape": "circle"}, {"color": "#d5f5e3", "id": "India", "label": "India", "shape": "circle"}, {"color": "#d5f5e3", "id": "Developing country", "label": "Developing country", "shape": "circle"}, {"color": "#d5f5e3", "id": "Designer", "label": "Designer", "shape": "circle"}, {"color": "#d5f5e3", "id": "User research", "label": "User research", "shape": "circle"}, {"color": "#d5f5e3", "id": "COVID-19 pandemic", "label": "COVID-19 pandemic", "shape": "circle"}, {"color": "#d5f5e3", "id": "2017", "label": "2017", "shape": "circle"}, {"color": "#d5f5e3", "id": "2016", "label": "2016", "shape": "circle"}, {"color": "#d5f5e3", "id": "2020", "label": "2020", "shape": "circle"}, {"color": "#d5f5e3", "id": "Dot-com bubble", "label": "Dot-com bubble", "shape": "circle"}, {"color": "#d5f5e3", "id": "Finance", "label": "Finance", "shape": "circle"}, {"color": "#d5f5e3", "id": "Startup company", "label": "Startup company", "shape": "circle"}, {"color": "#d5f5e3", "id": "Business", "label": "Business", "shape": "circle"}, {"color": "#d5f5e3", "id": "Prolet", "label": "Prolet", "shape": "circle"}, {"color": "#d5f5e3", "id": "Harvard Kennedy School", "label": "Harvard Kennedy School", "shape": "circle"}, {"color": "#d5f5e3", "id": "Harvard University", "label": "Harvard University", "shape": "circle"}, {"color": "#d5f5e3", "id": "Interview", "label": "Interview", "shape": "circle"}, {"color": "#d5f5e3", "id": "Performance appraisal", "label": "Performance appraisal", "shape": "circle"}, {"color": "#d5f5e3", "id": "Review", "label": "Review", "shape": "circle"}, {"color": "#d5f5e3", "id": "LinkedIn", "label": "LinkedIn", "shape": "circle"}, {"color": "#d5f5e3", "id": "Employment", "label": "Employment", "shape": "circle"}, {"color": "#d5f5e3", "id": "Google", "label": "Google", "shape": "circle"}, {"color": "#d5f5e3", "id": "ChromeOS", "label": "ChromeOS", "shape": "circle"}, {"color": "#d5f5e3", "id": "Writing", "label": "Writing", "shape": "circle"}, {"color": "#d5f5e3", "id": "Communication", "label": "Communication", "shape": "circle"}, {"color": "#d5f5e3", "id": "Soft skills", "label": "Soft skills", "shape": "circle"}, {"color": "#d5f5e3", "id": "Quality of life", "label": "Quality of life", "shape": "circle"}, {"color": "#d5f5e3", "id": "Professional network service", "label": "Professional network service", "shape": "circle"}, {"color": "#d5f5e3", "id": "Twitter", "label": "Twitter", "shape": "circle"}, {"color": "#d5f5e3", "id": "Computer-aided design", "label": "Computer-aided design", "shape": "circle"}, {"color": "#d5f5e3", "id": "Code", "label": "Code", "shape": "circle"}, {"color": "#d5f5e3", "id": "Informational interview", "label": "Informational interview", "shape": "circle"}, {"color": "#d5f5e3", "id": "Problem solving", "label": "Problem solving", "shape": "circle"}, {"color": "#d5f5e3", "id": "Venture round", "label": "Venture round", "shape": "circle"}, {"color": "#d5f5e3", "id": "Funding", "label": "Funding", "shape": "circle"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "Industrial design", "label": "subclass of", "title": "subclass of", "to": "Interaction design"}, {"arrows": "to", "from": "Product manager", "label": "part of", "title": "part of", "to": "Organization"}, {"arrows": "to", "from": "Product manager", "label": "field of this occupation", "title": "field of this occupation", "to": "Project"}, {"arrows": "to", "from": "Scope (project management)", "label": "part of", "title": "part of", "to": "Timeline"}, {"arrows": "to", "from": "Timeline", "label": "has part", "title": "has part", "to": "Scope (project management)"}, {"arrows": "to", "from": "User experience design", "label": "field of this occupation", "title": "field of this occupation", "to": "Design"}, {"arrows": "to", "from": "Design", "label": "practiced by", "title": "practiced by", "to": "User experience design"}, {"arrows": "to", "from": "Product manager", "label": "field of this occupation", "title": "field of this occupation", "to": "User experience design"}, {"arrows": "to", "from": "Great Recession", "label": "point in time", "title": "point in time", "to": "2008"}, {"arrows": "to", "from": "Labour economics", "label": "part of", "title": "part of", "to": "Economy"}, {"arrows": "to", "from": "Recession", "label": "point in time", "title": "point in time", "to": "2009"}, {"arrows": "to", "from": "Internship", "label": "subclass of", "title": "subclass of", "to": "Work (human activity)"}, {"arrows": "to", "from": "Internship", "label": "different from", "title": "different from", "to": "Work (human activity)"}, {"arrows": "to", "from": "Work (human activity)", "label": "different from", "title": "different from", "to": "Internship"}, {"arrows": "to", "from": "Culture", "label": "part of", "title": "part of", "to": "Company"}, {"arrows": "to", "from": "Feedback", "label": "part of", "title": "part of", "to": "Culture"}, {"arrows": "to", "from": "Culture", "label": "has part", "title": "has part", "to": "People"}, {"arrows": "to", "from": "Product design", "label": "subclass of", "title": "subclass of", "to": "Design"}, {"arrows": "to", "from": "Iteration", "label": "subclass of", "title": "subclass of", "to": "Design"}, {"arrows": "to", "from": "Customer experience", "label": "facet of", "title": "facet of", "to": "Marketing"}, {"arrows": "to", "from": "Customer experience", "label": "part of", "title": "part of", "to": "Marketing"}, {"arrows": "to", "from": "Customer experience", "label": "subclass of", "title": "subclass of", "to": "Customer experience"}, {"arrows": "to", "from": "User experience", "label": "subclass of", "title": "subclass of", "to": "Experience"}, {"arrows": "to", "from": "Customer experience", "label": "subclass of", "title": "subclass of", "to": "User experience"}, {"arrows": "to", "from": "Customer", "label": "has effect", "title": "has effect", "to": "Experience"}, {"arrows": "to", "from": "Experience", "label": "has cause", "title": "has cause", "to": "Customer"}, {"arrows": "to", "from": "Presales", "label": "part of", "title": "part of", "to": "Sales"}, {"arrows": "to", "from": "Presales", "label": "facet of", "title": "facet of", "to": "Sales"}, {"arrows": "to", "from": "Customer experience", "label": "facet of", "title": "facet of", "to": "Sales"}, {"arrows": "to", "from": "Customer experience", "label": "instance of", "title": "instance of", "to": "Use case"}, {"arrows": "to", "from": "Regulation", "label": "facet of", "title": "facet of", "to": "Privacy"}, {"arrows": "to", "from": "Personalization", "label": "facet of", "title": "facet of", "to": "Customer experience"}, {"arrows": "to", "from": "Personalization", "label": "subclass of", "title": "subclass of", "to": "Customer experience"}, {"arrows": "to", "from": "Personalization", "label": "part of", "title": "part of", "to": "Customer experience"}, {"arrows": "to", "from": "Privacy", "label": "subclass of", "title": "subclass of", "to": "Personalization"}, {"arrows": "to", "from": "Personalization", "label": "subclass of", "title": "subclass of", "to": "Privacy"}, {"arrows": "to", "from": "Privacy", "label": "facet of", "title": "facet of", "to": "Personalization"}, {"arrows": "to", "from": "Website wireframe", "label": "part of", "title": "part of", "to": "User experience design"}, {"arrows": "to", "from": "Website wireframe", "label": "subclass of", "title": "subclass of", "to": "User experience design"}, {"arrows": "to", "from": "Website wireframe", "label": "facet of", "title": "facet of", "to": "User experience design"}, {"arrows": "to", "from": "User-centered design", "label": "subclass of", "title": "subclass of", "to": "Design"}, {"arrows": "to", "from": "Data", "label": "subclass of", "title": "subclass of", "to": "Analytics"}, {"arrows": "to", "from": "User interface", "label": "part of", "title": "part of", "to": "User experience"}, {"arrows": "to", "from": "Educational technology", "label": "subclass of", "title": "subclass of", "to": "Education"}, {"arrows": "to", "from": "Gamification", "label": "subclass of", "title": "subclass of", "to": "Educational technology"}, {"arrows": "to", "from": "Gamification", "label": "facet of", "title": "facet of", "to": "Educational technology"}, {"arrows": "to", "from": "User experience", "label": "facet of", "title": "facet of", "to": "User experience"}, {"arrows": "to", "from": "User experience", "label": "part of", "title": "part of", "to": "Website"}, {"arrows": "to", "from": "Website", "label": "subclass of", "title": "subclass of", "to": "User experience"}, {"arrows": "to", "from": "User experience", "label": "facet of", "title": "facet of", "to": "Website"}, {"arrows": "to", "from": "Information needs", "label": "facet of", "title": "facet of", "to": "Usability"}, {"arrows": "to", "from": "Usability", "label": "facet of", "title": "facet of", "to": "Information needs"}, {"arrows": "to", "from": "User interface", "label": "part of", "title": "part of", "to": "System"}, {"arrows": "to", "from": "Artificial intelligence", "label": "studied by", "title": "studied by", "to": "Weak artificial intelligence"}, {"arrows": "to", "from": "India", "label": "instance of", "title": "instance of", "to": "Developing country"}, {"arrows": "to", "from": "Developing country", "label": "has part", "title": "has part", "to": "India"}, {"arrows": "to", "from": "Developing country", "label": "country", "title": "country", "to": "India"}, {"arrows": "to", "from": "User experience design", "label": "subclass of", "title": "subclass of", "to": "Designer"}, {"arrows": "to", "from": "User research", "label": "part of", "title": "part of", "to": "User experience design"}, {"arrows": "to", "from": "User research", "label": "subclass of", "title": "subclass of", "to": "User experience design"}, {"arrows": "to", "from": "User experience design", "label": "practiced by", "title": "practiced by", "to": "Designer"}, {"arrows": "to", "from": "Designer", "label": "field of this occupation", "title": "field of this occupation", "to": "User experience design"}, {"arrows": "to", "from": "COVID-19 pandemic", "label": "point in time", "title": "point in time", "to": "2017"}, {"arrows": "to", "from": "COVID-19 pandemic", "label": "point in time", "title": "point in time", "to": "2016"}, {"arrows": "to", "from": "2020", "label": "point in time", "title": "point in time", "to": "2020"}, {"arrows": "to", "from": "Dot-com bubble", "label": "instance of", "title": "instance of", "to": "Recession"}, {"arrows": "to", "from": "Great Recession", "label": "instance of", "title": "instance of", "to": "Recession"}, {"arrows": "to", "from": "Sales", "label": "part of", "title": "part of", "to": "Finance"}, {"arrows": "to", "from": "Sales", "label": "has part", "title": "has part", "to": "Finance"}, {"arrows": "to", "from": "Startup company", "label": "subclass of", "title": "subclass of", "to": "Business"}, {"arrows": "to", "from": "Prolet", "label": "opposite of", "title": "opposite of", "to": "Prolet"}, {"arrows": "to", "from": "Harvard Kennedy School", "label": "part of", "title": "part of", "to": "Harvard University"}, {"arrows": "to", "from": "Interview", "label": "has part", "title": "has part", "to": "Performance appraisal"}, {"arrows": "to", "from": "Review", "label": "subclass of", "title": "subclass of", "to": "Performance appraisal"}, {"arrows": "to", "from": "Interview", "label": "facet of", "title": "facet of", "to": "Work (human activity)"}, {"arrows": "to", "from": "LinkedIn", "label": "instance of", "title": "instance of", "to": "Website"}, {"arrows": "to", "from": "LinkedIn", "label": "owned by", "title": "owned by", "to": "Employment"}, {"arrows": "to", "from": "LinkedIn", "label": "instance of", "title": "instance of", "to": "Employment"}, {"arrows": "to", "from": "User experience design", "label": "facet of", "title": "facet of", "to": "User experience"}, {"arrows": "to", "from": "Google", "label": "product or material produced", "title": "product or material produced", "to": "ChromeOS"}, {"arrows": "to", "from": "ChromeOS", "label": "developer", "title": "developer", "to": "Google"}, {"arrows": "to", "from": "Writing", "label": "subclass of", "title": "subclass of", "to": "Communication"}, {"arrows": "to", "from": "Communication", "label": "instance of", "title": "instance of", "to": "Soft skills"}, {"arrows": "to", "from": "Quality of life", "label": "has part", "title": "has part", "to": "Experience"}, {"arrows": "to", "from": "Experience", "label": "part of", "title": "part of", "to": "Quality of life"}, {"arrows": "to", "from": "LinkedIn", "label": "instance of", "title": "instance of", "to": "Professional network service"}, {"arrows": "to", "from": "Twitter", "label": "instance of", "title": "instance of", "to": "Professional network service"}, {"arrows": "to", "from": "LinkedIn", "label": "different from", "title": "different from", "to": "Twitter"}, {"arrows": "to", "from": "Computer-aided design", "label": "uses", "title": "uses", "to": "Code"}, {"arrows": "to", "from": "Writing", "label": "part of", "title": "part of", "to": "Communication"}, {"arrows": "to", "from": "Informational interview", "label": "subclass of", "title": "subclass of", "to": "Interview"}, {"arrows": "to", "from": "Interview", "label": "subclass of", "title": "subclass of", "to": "Review"}, {"arrows": "to", "from": "Informational interview", "label": "subclass of", "title": "subclass of", "to": "Review"}, {"arrows": "to", "from": "Problem solving", "label": "subclass of", "title": "subclass of", "to": "Design"}, {"arrows": "to", "from": "Problem solving", "label": "facet of", "title": "facet of", "to": "Design"}, {"arrows": "to", "from": "Venture round", "label": "subclass of", "title": "subclass of", "to": "Funding"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 200,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
