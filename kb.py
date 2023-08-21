@@ -1,4 +1,4 @@
-import wikipedia  # Add this line to import the wikipedia module
+import wikipedia 
 
 # Define a Knowledge Base class to store entities, relations, and sources
 class KB():
