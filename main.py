@@ -11,10 +11,11 @@ import wikipedia
 import os
 from IPython.display import IFrame
 
-# Load model and tokenizer
+# Load pre-trained model and tokenizer for text generation
 tokenizer = AutoTokenizer.from_pretrained("Babelscape/rebel-large")
 model = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/rebel-large")
 
+# Extract relations from the model's generated output
 def extract_relations_from_model_output(text):
     relations = []
     relation, subject, relation, object_ = '', '', '', ''
@@ -59,6 +60,7 @@ def extract_relations_from_model_output(text):
         })
     return relations
 
+# Create a knowledge base (KB) from a short text
 def from_small_text_to_kb(text, verbose=False):
     kb = KB()
 
@@ -89,7 +91,7 @@ def from_small_text_to_kb(text, verbose=False):
 
     return kb
 
-# Altered method to extract kb from whole article
+# Create a knowledge base (KB) from a longer text
 def from_text_to_kb(text, article_url, span_length=128, article_title=None,
                     article_publish_date=None, verbose=False):
     # tokenize whole text
@@ -157,7 +159,7 @@ def from_text_to_kb(text, article_url, span_length=128, article_title=None,
 
     return kb
 
-# new methods for fetching url, downloading, parsing, and constructing kb
+# Following methods fetch urls, download, parse, and construct "mini-kbs"
 def get_article(url):
     article = Article(url)
     article.download()
@@ -173,6 +175,7 @@ def from_url_to_kb(url):
     kb = from_text_to_kb(article.text, article.url, **config)
     return kb
 
+# Get news article links related to a query
 def get_news_links(query, lang="en", region="US", pages=1, max_links=10000):
     googlenews = GoogleNews(lang=lang, region=region)
     googlenews.search(query)
@@ -200,6 +203,7 @@ def from_urls_to_kb(urls, verbose=False):
     return kb
 
 
+# Construct an interactive knowledge graph using pyvis
 def save_network_html(kb, filename="network.html"):
     # create network
     net = Network(directed=True, width="700px", height="700px", bgcolor="#eeeeee")
