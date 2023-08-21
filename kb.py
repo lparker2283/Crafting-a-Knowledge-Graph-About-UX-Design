@@ -1,24 +1,29 @@
 import wikipedia  # Add this line to import the wikipedia module
 
+# Define a Knowledge Base class to store entities, relations, and sources
 class KB():
     def __init__(self):
-        self.relations = []
-        self.entities = {}
-        # meta: involves article URLs
-        self.sources = {} 
-    
+        # Initialize empty lists and dictionaries to store data
+        self.relations = [] # List to store relation data
+        self.entities = {} # Dictionary to store entity data
+        self.sources = {}  # Dictionary to store source (article) data
+
+    # Merge the data from another KB instance into this one
     def merge_with_kb(self, kb2):
         for r in kb2.relations:
             article_url = list(r["meta"].keys())[0]
             source_data = kb2.sources[article_url]
             self.add_relation(r, source_data["article_title"], source_data["article_publish_date"])
 
+    # Check if 2 relations are equal
     def are_relations_equal(self, r1, r2):
         return all(r1[attr] == r2[attr] for attr in ["head", "type", "tail"])
-
+    
+    # Check if a relation already exists in the kb
     def exists_relation(self, r1):
         return any(self.are_relations_equal(r1, r2) for r2 in self.relations)
 
+    # Merge relations with the same content but from different sources
     def merge_relations(self, r2):
         r1 = [r for r in self.relations
               if self.are_relations_equal(r2, r)][0]
@@ -34,6 +39,7 @@ class KB():
                             if span not in r1["meta"][article_url]["spans"]]
             r1["meta"][article_url]["spans"] += spans_to_add
 
+    # Fetch Wikipedia data for a candidate entity
     def get_wikipedia_data(self, candidate_entity):
         try:
             page = wikipedia.page(candidate_entity, auto_suggest=False)
@@ -46,11 +52,12 @@ class KB():
         except:
             return None
 
+    # Add an entity to the KB
     def add_entity(self, e):
         self.entities[e["title"]] = {k: v for k, v in e.items() if k != "title"}
 
+     # Add a relation to the KB
     def add_relation(self, r, article_title, article_publish_date):
-        # check on wikipedia
         candidate_entities = [r["head"], r["tail"]]
         entities = [self.get_wikipedia_data(ent) for ent in candidate_entities]
 
@@ -80,6 +87,7 @@ class KB():
         else:
            self.merge_relations(r)
 
+    # Print the content of the KB
     def print(self):
         print("Entities:")
         for e in self.entities.items():
@@ -93,7 +101,7 @@ class KB():
         for s in self.sources.items():
             print(f" {s}")
     
-    # method added to merge multiple knowledge bases for separate articles together
+    # Merge multiple knowledge bases for separate articles together
     def merge_with_kb(self, kb2):
         for r in kb2.relations:
             article_url = list(r["meta"].keys())[0]
