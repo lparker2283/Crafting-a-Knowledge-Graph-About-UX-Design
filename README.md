@@ -6,7 +6,7 @@ Read the paper on the REBEL model [here](https://github.com/Babelscape/rebel/blo
 
 **Results**: My knowledge graph comprises information from the following articles:
 - [Mastering UX/CX Design: Privacy Meets Omnichannel Harmony](https://www.cmswire.com/customer-experience/mastering-uxcx-design-privacy-meets-omnichannel-harmony/)
-- [Interview with a Leading UX Designer Agency in San Francisco]([https://www.cmswire.com/customer-experience/mastering-uxcx-design-privacy-meets-omnichannel-harmony/](https://southernafrican.news/2023/04/26/interview-with-a-leading-ux-designer-agency-in-san-francisco/)https://southernafrican.news/2023/04/26/interview-with-a-leading-ux-designer-agency-in-san-francisco/)
+- [Interview with a Leading UX Designer Agency in San Francisco](https://southernafrican.news/2023/04/26/interview-with-a-leading-ux-designer-agency-in-san-francisco/)
 - [In Conversation with Aayushi Bhotica, Lead Designer, Wadhwani AI, on the use of Design for Social Impact](https://www.cxotoday.com/interviews/in-conversation-with-ayushi-bhotica-lead-designer-wadhwani-ai-on-the-use-of-design-for-social-impact/)
 - [A Designer’s Survival Guide to Economic Uncertainty](https://builtin.com/design-ux/recession-proof-designer)
 - [Big Impact on a Small Budget: 6 Cost-Effective UX Research Techniques for Early-Stage Founders](https://entrepreneurshandbook.co/big-impact-on-a-small-budget-6-cost-effective-ux-research-techniques-for-early-stage-founders-e69c27878ba0)
