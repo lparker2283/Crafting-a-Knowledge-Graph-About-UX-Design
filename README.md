@@ -16,6 +16,8 @@ The resultant graph correctly identified that UX design is:
 - related (operationally) to product management and customer experience
 - makes use of tools/methods like user research, wireframing, and problem solving
 
-<div align=”center”>![UX Design Interview Knowledge Graph](https://github.com/lparker2283/Crafting-a-Knowledge-Graph-About-UX-Design/blob/main/UX_Knowledge_Graph.png)</div>
+<p align="center">
+<img src="https://github.com/lparker2283/Crafting-a-Knowledge-Graph-About-UX-Design/blob/main/UX_Knowledge_Graph.png" />
+</p>
 
 However, few articles went into this knowledge graph, they were of mixed length (one promising looking article exceeded the length limit set by REBEL) and quality. I suspect better results could be achieved by curating a list of input articles on the frontend rather than relying on recently articles Google News has access to that contain a given keyword. 
